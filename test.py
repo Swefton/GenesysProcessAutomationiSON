@@ -84,48 +84,7 @@ def rename_newest_file(directory):
     newest_file = max(files, key=lambda item: item[1])[0]
     os.rename(directory + '\\' + newest_file,directory + '\\' + '(1) ' + newest_file)
 
-# Agent Reports
-agent_report = ['//a[normalize-space()="Postpaid Agent Activity Report Shubham"]',
-                '//a[normalize-space()="Prepaid Agent Activity Report Shubham"]',
-                '//a[normalize-space()="Postpaid_APR_shubham"]',
-                '//a[normalize-space()="Prepaid_APR_Shubham"]']
 
-for report in range(len(agent_report)):
-    # opens reports page
-    time.sleep(5)
-    open_webpage("https://apps.euw2.pure.cloud/directory/#/engage/reports",30) 
-    # switch to appropriate iframe
-    frame_switch("//iframe[@id='engage-frame']")
-    click_element('xpath',agent_report[report]) # click on report
-    # set location under advanced tab
-    click_element('xpath','//a[normalize-space()="Advanced"]') 
-    click_element('xpath','//button[@class="btn btn-default btn-sm dropdown-toggle select-search-type"]')
-    click_element('xpath', '//span[normalize-space()="Location"]')
-    if report%2 == 0:
-        type_element('xpath','/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/form[1]/div[4]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[2]/div[2]/ul[1]/li[1]/input[1]','BPO3 - CT - PO')   
-    elif report%2 != 0:
-        type_element('xpath','/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/form[1]/div[4]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[2]/div[2]/ul[1]/li[1]/input[1]','BPO3 - CT - PP')
-    time.sleep(3)
-    type_element('xpath','/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/form[1]/div[4]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[2]/div[2]/ul[1]/li[1]/input[1]',Keys.ENTER)
-    try: # attempt to save settings
-        click_element('xpath','//button[@class="btn btn-primary save-advanced-user-select"]')
-    except: # back out and cancel if settings button is greyed out (sometimes it is presaved)
-        click_element('xpath','/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/form[1]/div[4]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[3]/button[3]')
-    click_element('xpath','//input[@value="now"]') # queue report generation
-    # enter date field to be yesterday
-    yesterday = (date.today() - timedelta(days = 1)).strftime("%m/%d/%Y") # subtracts 24 hours from current date
-    yesterday = yesterday+" - "+yesterday # formats date into string in the same way as website
-    date_input_field = click_element('xpath','//input[@id="reportEditor-timePeriod-interval"]') # clicks on date/time menu bar
-    date_input_field.clear() # clears the date written previously
-    date_input_field.send_keys(yesterday) # types date in date field
-    time.sleep(3)
-    click_element('xpath','//button[normalize-space()="Apply"]') # apply settings
-    click_element('cssselector','button[type="submit"]') # start report generation
-    time.sleep(5) # wait for report to generate
-
-#download 4 latest reports
-time.sleep(5)
-click_element('xpath',"(//a[@title='XLS'][normalize-space()='XLS'])[1]")
-click_element('xpath',"(//a[@title='XLS'][normalize-space()='XLS'])[2]")
-click_element('xpath',"(//a[@title='XLS'][normalize-space()='XLS'])[3]")
-click_element('xpath',"(//a[@title='XLS'][normalize-space()='XLS'])[4]")
+open_webpage()
+input()
+click_element()
